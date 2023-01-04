@@ -6,12 +6,13 @@ describe('Send notification use case', () => {
     const notificationsRepository = new InMemoryNotificationsRepository();
     const notificationUseCase = new SendNotification(notificationsRepository);
 
-    await notificationUseCase.execute({
+    const { notification } = await notificationUseCase.execute({
       category: 'Test',
       content: 'Test content',
       recipientId: 'example-recipientId',
     });
 
     expect(notificationsRepository.notifications).toHaveLength(1);
+    expect(notificationsRepository.notifications[0]).toEqual(notification);
   });
 });
